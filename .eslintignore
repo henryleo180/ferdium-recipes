@@ -2,3 +2,6 @@
 .github
 .husky
 node_modules
+chatgpt-multi/package-lock.json
+chatgpt-multi/dist
+chatgpt-multi/test-results

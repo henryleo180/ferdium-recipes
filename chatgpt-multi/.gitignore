@@ -1,0 +1,5 @@
+node_modules/
+dist/
+test-results/
+# The repository root ignores *.png; the app icon is needed for packaging.
+!build/icon.png

@@ -1,0 +1,97 @@
+# Tests ChatGPT Multi (chatgpt-multi/) and builds its installers for Windows,
+# macOS and Linux. The installers are attached to each run under "Artifacts".
+# Third-party actions are pinned to full commit SHAs.
+
+name: ChatGPT Multi
+
+on:
+  push:
+    paths:
+      - 'chatgpt-multi/**'
+      - '.github/workflows/chatgpt-multi.yml'
+  pull_request:
+    paths:
+      - 'chatgpt-multi/**'
+      - '.github/workflows/chatgpt-multi.yml'
+  # Manual trigger from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chatgpt-multi-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: chatgpt-multi
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: chatgpt-multi/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Unit tests
+        run: npm test
+      - name: End-to-end tests
+        run: xvfb-run --auto-servernum npm run test:e2e
+      - name: Upload end-to-end screenshots
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-results
+          path: chatgpt-multi/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  build:
+    name: Build (${{ matrix.os }})
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: chatgpt-multi/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build installers
+        run: npm run dist
+        env:
+          # Never pick up a signing certificate from the runner: macOS builds
+          # are ad-hoc signed (see "identity" in package.json).
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Upload installers
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ChatGPT-Multi-${{ runner.os }}
+          path: |
+            chatgpt-multi/dist/*.exe
+            chatgpt-multi/dist/*.dmg
+            chatgpt-multi/dist/*.deb
+            chatgpt-multi/dist/*.AppImage
+          if-no-files-found: error
+          retention-days: 14

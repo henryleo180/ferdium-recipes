@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Two overlapping chat bubbles: two accounts side by side. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1fb58f"/>
+      <stop offset="1" stop-color="#0b6e56"/>
+    </linearGradient>
+  </defs>
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#bg)"/>
+  <path d="M430 250h330a90 90 0 0 1 90 90v200a90 90 0 0 1-90 90h-40v80l-100-80H430a90 90 0 0 1-90-90V340a90 90 0 0 1 90-90z" fill="#3b82f6"/>
+  <path d="M264 400h330a90 90 0 0 1 90 90v200a90 90 0 0 1-90 90H424l-100 80v-80h-60a90 90 0 0 1-90-90V490a90 90 0 0 1 90-90z" fill="#ffffff"/>
+  <circle cx="330" cy="590" r="32" fill="#10a37f"/>
+  <circle cx="429" cy="590" r="32" fill="#10a37f"/>
+  <circle cx="528" cy="590" r="32" fill="#10a37f"/>
+</svg>

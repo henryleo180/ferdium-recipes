@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>ChatGPT 多账号</title>
+    <link rel="stylesheet" href="ui.css" />
+    <script src="ui.js" defer></script>
+  </head>
+  <body>
+    <header id="toolbar">
+      <div class="group">
+        <button id="back" class="icon" type="button" title="返回" aria-label="返回">
+          <svg viewBox="0 0 20 20"><path d="M12.5 4.5 7 10l5.5 5.5" /></svg>
+        </button>
+        <button id="forward" class="icon" type="button" title="前进" aria-label="前进">
+          <svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" /></svg>
+        </button>
+        <button id="reload" class="icon" type="button" title="重新加载 (Ctrl+R)" aria-label="重新加载">
+          <svg viewBox="0 0 20 20">
+            <path d="M15.4 11.2a5.6 5.6 0 1 1-1.3-5.1" />
+            <path d="M15 3.8v3.4h-3.4" />
+          </svg>
+        </button>
+        <button id="home" class="icon" type="button" title="回到 ChatGPT 首页" aria-label="回到 ChatGPT 首页">
+          <svg viewBox="0 0 20 20">
+            <path d="M3.8 9.2 10 4l6.2 5.2" />
+            <path d="M5.6 8v7.6h8.8V8" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="tabs" role="tablist" aria-label="账号"></div>
+      <button id="add" class="icon" type="button" title="添加账号 (Ctrl+T)" aria-label="添加账号">
+        <svg viewBox="0 0 20 20"><path d="M10 4.5v11M4.5 10h11" /></svg>
+      </button>
+
+      <div class="spacer"></div>
+
+      <div id="address" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <rect x="3.5" y="7" width="9" height="6.5" rx="1.5" />
+          <path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7" />
+        </svg>
+        <span id="host"></span>
+      </div>
+      <div class="group">
+        <button id="split" class="icon" type="button" title="分屏：同时显示所有账号 (Ctrl+Shift+E)" aria-label="分屏" aria-pressed="false">
+          <svg viewBox="0 0 20 20">
+            <rect x="3" y="4.5" width="14" height="11" rx="2" />
+            <path d="M10 4.5v11" />
+          </svg>
+        </button>
+        <button id="external" class="icon" type="button" title="在默认浏览器（如 Chrome）中打开当前页面" aria-label="在默认浏览器中打开">
+          <svg viewBox="0 0 20 20">
+            <path d="M11.5 4H16v4.5" />
+            <path d="M16 4 9.5 10.5" />
+            <path d="M14 12v2.8c0 .7-.5 1.2-1.2 1.2H5.2c-.7 0-1.2-.5-1.2-1.2V7.2C4 6.5 4.5 6 5.2 6H8" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="stage">
+      <div id="empty" hidden>
+        <p>还没有账号标签</p>
+        <button id="empty-add" type="button">添加账号</button>
+      </div>
+    </main>
+  </body>
+</html>
