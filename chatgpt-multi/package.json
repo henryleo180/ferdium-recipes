@@ -6,6 +6,8 @@
   "description": "多账号 ChatGPT 桌面小软件：每个标签独立登录一个账号，可分屏同时使用",
   "license": "MIT",
   "author": "henryleo180",
+  "homepage": "https://github.com/henryleo180/ferdium-recipes",
+  "desktopName": "chatgpt-multi.desktop",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -79,6 +81,7 @@
         "AppImage"
       ],
       "category": "Network",
+      "syncDesktopName": true,
       "maintainer": "henryleo180"
     }
   }
